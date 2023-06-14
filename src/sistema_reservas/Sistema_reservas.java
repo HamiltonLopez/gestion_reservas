@@ -4,6 +4,10 @@
  */
 package sistema_reservas;
 
+import vista.Gestion;
+
+
+
 /**
  *
  * @author Asus
@@ -14,7 +18,9 @@ public class Sistema_reservas {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+       Gestion inicio = new Gestion();
+       inicio.setVisible(true);
     }
+   
     
 }
