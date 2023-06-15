@@ -14,11 +14,11 @@ import modelo.Reserva;
  *
  * @author Asus
  */
-public class BuscarFecha extends javax.swing.JFrame {
+public class Cancelar extends javax.swing.JFrame {
 
     Controlador controlador;
 
-    public BuscarFecha(Controlador controlador) {
+    public Cancelar(Controlador controlador) {
         initComponents();
         setLocationRelativeTo(this);
         this.controlador = controlador;
@@ -33,47 +33,55 @@ public class BuscarFecha extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        chooserFecha = new com.toedter.calendar.JDateChooser();
         jButton2 = new javax.swing.JButton();
-
-        jLabel1.setText("jLabel1");
+        txtNoDocumento = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jButton2.setBackground(new java.awt.Color(0, 102, 102));
+        jButton2.setBackground(new java.awt.Color(204, 0, 0));
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("BUSCAR");
+        jButton2.setText("CANCELAR");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
 
+        jLabel1.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel1.setText("CODIGO :");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(113, 113, 113)
-                .addComponent(chooserFecha, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
-                .addGap(132, 132, 132))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(159, 159, 159)
-                .addComponent(jButton2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(121, 121, 121)
+                        .addComponent(txtNoDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(172, 172, 172)
+                        .addComponent(jLabel1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(157, 157, 157)
+                        .addComponent(jButton2)))
+                .addContainerGap(124, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(85, 85, 85)
-                .addComponent(chooserFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
+                .addGap(51, 51, 51)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(txtNoDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
                 .addComponent(jButton2)
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -91,40 +99,28 @@ public class BuscarFecha extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if (chooserFecha.getDate() == null) {
-            JOptionPane.showMessageDialog(null, "Ingrese la fecha que desea consultar");
-        } else {
-            Date fecha = chooserFecha.getDate();
-            leerLista(controlador.buscarReservarXFecha(fecha));
-        }
-
-
+if(txtNoDocumento.getText().isEmpty()){
+    JOptionPane.showMessageDialog(null, "Ingrese el código de la reserva que desea CANCELAR");
+}else{
+     int documento = Integer.parseInt(txtNoDocumento.getText());
+     if(controlador.cancelarReserva(documento)){
+         JOptionPane.showMessageDialog(null, "Reserva de No."+controlador.buscarReservarXCodigo(documento).getCodigo()+" ha sido cancelada");
+     }else{
+         JOptionPane.showMessageDialog(null, "No se ha encontrado registro");
+     }
+}
+       
     }//GEN-LAST:event_jButton2ActionPerformed
-    public void leerLista(ArrayList<Reserva> lista) {
-        if (lista.size() < 1) {
-            JOptionPane.showMessageDialog(null, "La fecha ingresada no cuenta con reservas");
-        } else {
-            String reservas = "";
-            int num = 1;
-            for (Reserva reserva : lista) {
-                reservas += "\nNo." + num + "\nCodigo :" + reserva.getCodigo() + "\nCliente |" + " Nombre : "
-                        + reserva.getNombreCliente() + " | CC : " + reserva.getNoDocumento() + "\nFecha : " + reserva.getFechaReserva() 
-                        + "\nEstado : " + reserva.getEstado() +"\nPersonas :  " +reserva.getCantidadPersonas()
-                        + "\n-------------------------------";
-                num++;
-            }
-            JOptionPane.showMessageDialog(null, reservas);
-        }
-    }
+  
 
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.toedter.calendar.JDateChooser chooserFecha;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextField txtNoDocumento;
     // End of variables declaration//GEN-END:variables
 }

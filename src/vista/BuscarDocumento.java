@@ -3,7 +3,7 @@ package vista;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
-import modelo.Controlador;
+import controlador.Controlador;
 import modelo.Reserva;
 
 /*
@@ -42,6 +42,8 @@ public class BuscarDocumento extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
+        jButton2.setBackground(new java.awt.Color(0, 102, 102));
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("BUSCAR");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -97,8 +99,13 @@ public class BuscarDocumento extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        int documento = Integer.parseInt(txtNoDocumento.getText());
-        leerLista(controlador.buscarReservarXDocumento(documento));
+        if (txtNoDocumento.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Ingrese el número de documento de la persona que desea consultar la reserva");
+        } else {
+            int documento = Integer.parseInt(txtNoDocumento.getText());
+            leerLista(controlador.buscarReservarXDocumento(documento));
+        }
+
     }//GEN-LAST:event_jButton2ActionPerformed
     public void leerLista(ArrayList<Reserva> lista) {
 
@@ -108,8 +115,10 @@ public class BuscarDocumento extends javax.swing.JFrame {
             int num = 1;
             String reservas = "";
             for (Reserva reserva : lista) {
-                reservas += "\nNo." + num + "\nCodigo :" + reserva.getCodigo() + "\nCliente " + " | Nombre : "
-                        + reserva.getNombreCliente() + " | CC : " + reserva.getNoDocumento() + "\n-------------------------------";
+                reservas += "\nNo." + num + "\nCodigo :" + reserva.getCodigo() + "\nCliente |" + " Nombre : "
+                        + reserva.getNombreCliente() + " | CC : " + reserva.getNoDocumento() + "\nFecha : " + reserva.getFechaReserva() 
+                        + "\nEstado : " + reserva.getEstado() +"\nPersonas :  " +reserva.getCantidadPersonas()
+                        + "\n-------------------------------";
                 num++;
             }
             JOptionPane.showMessageDialog(null, reservas);

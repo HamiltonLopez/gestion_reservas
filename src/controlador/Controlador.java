@@ -2,12 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package modelo;
+package controlador;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import modelo.Reserva;
 
 /**
  *
@@ -43,29 +44,33 @@ public class Controlador {
         return false;
     }
 
-    public boolean modificarReserva(Reserva reserva) {
-        for (int i = 0; i < reservas.size(); i++) {
-            if (reservas.get(i).getCodigo() == reserva.getCodigo()) {
-                reservas.get(i).setMotivo(reserva.getMotivo());
-                reservas.get(i).setTipoDecoracion(reserva.getTipoDecoracion());
+    public boolean modificarReserva(Reserva reserva,int codigo) {
+        Reserva aux = buscarReservarXCodigo(codigo);
 
-                return true;
-            }
+        if (aux != null) {
+            aux.setMotivo(reserva.getMotivo());
+            aux.setTipoDecoracion(reserva.getTipoDecoracion());
+            aux.setFechaReserva(reserva.getFechaReserva());
+
+            return true;
+        } else {
+            return false;
         }
-        return false;
+
     }
 
     public ArrayList<Reserva> buscarReservarXDocumento(int documento) {
-           ArrayList<Reserva> lista = new ArrayList<>();
+        ArrayList<Reserva> lista = new ArrayList<>();
         for (int i = 0; i < reservas.size(); i++) {
             if (reservas.get(i) != null && reservas.get(i).getNoDocumento() == documento) {
 
                 lista.add(reservas.get(i));
             }
         }
-       return lista;
+        return lista;
     }
-       public Reserva buscarReservarXCodigo(int codigo) {
+
+    public Reserva buscarReservarXCodigo(int codigo) {
         for (int i = 0; i < reservas.size(); i++) {
             if (reservas.get(i) != null && reservas.get(i).getCodigo() == codigo) {
                 return reservas.get(i);
